@@ -1,33 +1,33 @@
 class Graph
   
-  attr_accessor :vertex
+  attr_accessor :vertex, :nodes
   
-  def initialize(vertex = [])
-    @vertex = vertex
+  def initialize(vertex_to_initialize = [])
     @nodes = []
-    if @vertex.length > 0
-      create_vertex
-      create_nodes
+    @vertex = []
+    create_vertex(vertex_to_initialize)
+    create_nodes
+  end
+
+  def add_vertex(nodes = [], distance)
+    @vertex << Vertex.new(nodes, distance)
+  end
+  
+  # private
+  
+  def create_nodes
+    node_name_from_vertex.each do |node_name|
+      @nodes << Node.new(node_name, vertex.map(&:nodes))
     end
   end
 
-  def add_vertex(name, nodes = [])
-    @vertex << Vertex.new(name, nodes[0], nodes[1], nodes[2])
+  def node_name_from_vertex
+    vertex.map(&:nodes).flatten.uniq
   end
-  
-  private
-  
-  def create_nodes
-    
-  end
-  
-  def create_node(node_name)
-    
-  end
-  
-  def create_vertex
-    @nodes.each_with_index do |node, index|
-      add_vertex(@letters[index], node)
+
+  def create_vertex(vertex_to_create)
+    vertex_to_create.each do |single_vertex|
+      add_vertex([single_vertex[0], single_vertex[1]], single_vertex[2])
     end
   end
 end
