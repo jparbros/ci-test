@@ -9,10 +9,6 @@ class Graph
     create_nodes
   end
 
-  def add_vertex(nodes = [], distance)
-    @vertex << Vertex.new(nodes, distance)
-  end
-  
   def get_vertex_from_node node_source, node_destination
     @vertex.select {|vertex| vertex.nodes.include?(node_source) && vertex.nodes.include?(node_destination)}.first
   end
@@ -20,24 +16,27 @@ class Graph
   def get_node_from_name(node_name)
     @nodes.select {|node| node.name == node_name}.first
   end
-  
-  def nodes_without_start_node(start_node)
-    @nodes - [start_node]
-  end
-  
-  def unvisited_neighbors_of_node(node_to_search)
-    @nodes.select {|node| node_to_search.neighbors.include? node.name and !node.visited?}
-  end
-  
+
   def get_permanet_node
     @nodes.select{|node| !node.visited? and !node.accumulated.nil? }.sort {|node_a, node_b| node_a.accumulated <=> node_b.accumulated}.first
   end
   
-  # private
+  private
+  
+  def add_vertex(nodes = [], distance)
+    @vertex << Vertex.new(nodes, distance)
+  end
   
   def create_nodes
     node_name_from_vertex.each do |node_name|
       @nodes << Node.new(node_name.to_i, vertex.map(&:nodes))
+    end
+    set_neighbors_nodes
+  end
+  
+  def set_neighbors_nodes
+    @nodes.each do |node|
+      node.neighbors = @nodes.select {|current_node| node.neighbors.include? current_node.name}
     end
   end
 
