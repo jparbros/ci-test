@@ -1,7 +1,7 @@
 class Vertex
-  attr_accessor :nodes, :distances
+  attr_accessor :nodes, :distance
   def initialize(nodes = [], distance)
     @nodes = nodes
-    @distances = distance
+    @distance = distance
   end
 end
