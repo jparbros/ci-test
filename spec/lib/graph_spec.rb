@@ -10,7 +10,7 @@ describe Graph do
         end
       end
     end
-    
+
     describe "nodes and distance" do
       it "should create vertex with nodes and distance" do
         graph = Graph.new [[1,2,6], [2,4,7], [1,3,8],[3,4,4],[3,2,5]]

@@ -2,11 +2,13 @@ class Graph
   
   attr_accessor :vertex
   
-  def initialize(nodes = [])
-    @vertex = []
-    @letters = ('A'..'ZZ').to_a
-    @nodes = nodes
-    create_vertex if @nodes.length > 0
+  def initialize(vertex = [])
+    @vertex = vertex
+    @nodes = []
+    if @vertex.length > 0
+      create_vertex
+      create_nodes
+    end
   end
 
   def add_vertex(name, nodes = [])
@@ -14,6 +16,14 @@ class Graph
   end
   
   private
+  
+  def create_nodes
+    
+  end
+  
+  def create_node(node_name)
+    
+  end
   
   def create_vertex
     @nodes.each_with_index do |node, index|
